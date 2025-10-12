@@ -1,0 +1,666 @@
+# ============================================
+# GraphQL Schema для client-info сервиса
+# ============================================
+
+"""
+Основной тип клиента с полной информацией.
+Позволяет запрашивать только необходимые поля и связанные объекты.
+"""
+type Client {
+  """Уникальный идентификатор клиента"""
+  id: ID!
+  
+  """ФИО клиента"""
+  name: String!
+  
+  """Возраст клиента"""
+  age: Int!
+  
+  """
+  Email клиента
+  Может быть null, если не указан
+  """
+  email: String
+  
+  """
+  Телефон клиента
+  Может быть null, если не указан
+  """
+  phone: String
+  
+  """
+  Адрес клиента
+  Может быть null, если не указан
+  """
+  address: String
+  
+  """
+  Дата рождения клиента в формате ISO 8601 (YYYY-MM-DD)
+  """
+  birthDate: String
+  
+  """
+  ИНН клиента
+  Может быть null, если не указан
+  """
+  inn: String
+  
+  """
+  СНИЛС клиента
+  Может быть null, если не указан
+  """
+  snils: String
+  
+  """
+  Документы клиента (паспорт, водительское удостоверение и т.д.)
+  Lazy-loading: загружается только если явно запрошено в query
+  """
+  documents: [Document!]!
+  
+  """
+  Родственники клиента
+  Lazy-loading: загружается только если явно запрошено в query
+  """
+  relatives: [Relative!]!
+  
+  """
+  Контактные лица клиента
+  Lazy-loading: загружается только если явно запрошено в query
+  """
+  contacts: [Contact!]!
+  
+  """
+  Дата создания записи клиента
+  """
+  createdAt: String!
+  
+  """
+  Дата последнего обновления записи
+  """
+  updatedAt: String!
+}
+
+"""
+Документ клиента (паспорт, водительское удостоверение, СНИЛС и т.д.)
+"""
+type Document {
+  """Уникальный идентификатор документа"""
+  id: ID!
+  
+  """
+  Тип документа
+  Примеры: PASSPORT, DRIVER_LICENSE, BIRTH_CERTIFICATE, SNILS
+  """
+  type: DocumentType!
+  
+  """Серия и номер документа"""
+  number: String!
+  
+  """
+  Дата выдачи документа в формате ISO 8601 (YYYY-MM-DD)
+  """
+  issueDate: String!
+  
+  """
+  Дата окончания срока действия документа в формате ISO 8601 (YYYY-MM-DD)
+  Может быть null для бессрочных документов
+  """
+  expiryDate: String
+  
+  """
+  Кем выдан документ
+  """
+  issuedBy: String
+  
+  """
+  Код подразделения (для паспорта РФ)
+  """
+  departmentCode: String
+  
+  """
+  Место рождения (для паспорта)
+  """
+  placeOfBirth: String
+  
+  """
+  Скан/фото документа (URL)
+  """
+  scanUrl: String
+  
+  """
+  Статус верификации документа
+  """
+  verificationStatus: VerificationStatus!
+  
+  """
+  ID клиента, которому принадлежит документ
+  """
+  clientId: ID!
+}
+
+"""
+Родственник клиента
+"""
+type Relative {
+  """Уникальный идентификатор родственника"""
+  id: ID!
+  
+  """
+  Тип родства
+  """
+  relationType: RelationType!
+  
+  """ФИО родственника"""
+  name: String!
+  
+  """Возраст родственника"""
+  age: Int
+  
+  """
+  Дата рождения родственника в формате ISO 8601 (YYYY-MM-DD)
+  """
+  birthDate: String
+  
+  """
+  Телефон родственника
+  """
+  phone: String
+  
+  """
+  Email родственника
+  """
+  email: String
+  
+  """
+  Является ли родственник бенефициаром
+  """
+  isBeneficiary: Boolean!
+  
+  """
+  Доля бенефициара (0-100%)
+  Null если не является бенефициаром
+  """
+  beneficiaryShare: Int
+  
+  """
+  ID клиента, к которому относится родственник
+  """
+  clientId: ID!
+  
+  """
+  Ссылка на полную информацию о родственнике, если он тоже является клиентом
+  """
+  client: Client
+}
+
+"""
+Контактное лицо клиента (не родственник)
+"""
+type Contact {
+  """Уникальный идентификатор контакта"""
+  id: ID!
+  
+  """ФИО контактного лица"""
+  name: String!
+  
+  """
+  Тип контакта (коллега, друг, сосед и т.д.)
+  """
+  contactType: String!
+  
+  """Телефон контактного лица"""
+  phone: String!
+  
+  """Email контактного лица"""
+  email: String
+  
+  """
+  Комментарий о контактном лице
+  """
+  note: String
+  
+  """
+  ID клиента, к которому относится контакт
+  """
+  clientId: ID!
+}
+
+"""
+Типы документов
+"""
+enum DocumentType {
+  """Паспорт гражданина РФ"""
+  PASSPORT
+  
+  """Водительское удостоверение"""
+  DRIVER_LICENSE
+  
+  """Свидетельство о рождении"""
+  BIRTH_CERTIFICATE
+  
+  """СНИЛС"""
+  SNILS
+  
+  """ИНН"""
+  INN
+  
+  """Заграничный паспорт"""
+  INTERNATIONAL_PASSPORT
+  
+  """Военный билет"""
+  MILITARY_ID
+  
+  """Другой документ"""
+  OTHER
+}
+
+"""
+Типы родства
+"""
+enum RelationType {
+  """Супруг/супруга"""
+  SPOUSE
+  
+  """Ребенок"""
+  CHILD
+  
+  """Родитель"""
+  PARENT
+  
+  """Брат/сестра"""
+  SIBLING
+  
+  """Бабушка/дедушка"""
+  GRANDPARENT
+  
+  """Внук/внучка"""
+  GRANDCHILD
+  
+  """Другое родство"""
+  OTHER
+}
+
+"""
+Статус верификации документа
+"""
+enum VerificationStatus {
+  """Не проверен"""
+  NOT_VERIFIED
+  
+  """Проверяется"""
+  PENDING
+  
+  """Проверен успешно"""
+  VERIFIED
+  
+  """Отклонен"""
+  REJECTED
+}
+
+"""
+Фильтр для поиска клиентов
+"""
+input ClientFilter {
+  """Поиск по имени (поддерживает частичное совпадение)"""
+  name: String
+  
+  """Поиск по email"""
+  email: String
+  
+  """Поиск по телефону"""
+  phone: String
+  
+  """Минимальный возраст"""
+  minAge: Int
+  
+  """Максимальный возраст"""
+  maxAge: Int
+  
+  """Поиск по ИНН"""
+  inn: String
+  
+  """Поиск по СНИЛС"""
+  snils: String
+}
+
+"""
+Входные данные для создания клиента
+"""
+input CreateClientInput {
+  """ФИО клиента"""
+  name: String!
+  
+  """Возраст клиента"""
+  age: Int!
+  
+  """Email клиента"""
+  email: String
+  
+  """Телефон клиента"""
+  phone: String
+  
+  """Адрес клиента"""
+  address: String
+  
+  """Дата рождения"""
+  birthDate: String
+  
+  """ИНН"""
+  inn: String
+  
+  """СНИЛС"""
+  snils: String
+}
+
+"""
+Входные данные для обновления клиента
+"""
+input UpdateClientInput {
+  """ФИО клиента"""
+  name: String
+  
+  """Возраст клиента"""
+  age: Int
+  
+  """Email клиента"""
+  email: String
+  
+  """Телефон клиента"""
+  phone: String
+  
+  """Адрес клиента"""
+  address: String
+  
+  """Дата рождения"""
+  birthDate: String
+  
+  """ИНН"""
+  inn: String
+  
+  """СНИЛС"""
+  snils: String
+}
+
+"""
+Входные данные для добавления документа
+"""
+input AddDocumentInput {
+  """ID клиента"""
+  clientId: ID!
+  
+  """Тип документа"""
+  type: DocumentType!
+  
+  """Серия и номер документа"""
+  number: String!
+  
+  """Дата выдачи"""
+  issueDate: String!
+  
+  """Дата окончания срока действия"""
+  expiryDate: String
+  
+  """Кем выдан"""
+  issuedBy: String
+  
+  """Код подразделения"""
+  departmentCode: String
+  
+  """Место рождения"""
+  placeOfBirth: String
+  
+  """URL скана документа"""
+  scanUrl: String
+}
+
+"""
+Входные данные для добавления родственника
+"""
+input AddRelativeInput {
+  """ID клиента"""
+  clientId: ID!
+  
+  """Тип родства"""
+  relationType: RelationType!
+  
+  """ФИО родственника"""
+  name: String!
+  
+  """Возраст родственника"""
+  age: Int
+  
+  """Дата рождения"""
+  birthDate: String
+  
+  """Телефон"""
+  phone: String
+  
+  """Email"""
+  email: String
+  
+  """Является ли бенефициаром"""
+  isBeneficiary: Boolean
+  
+  """Доля бенефициара (0-100%)"""
+  beneficiaryShare: Int
+}
+
+# ============================================
+# QUERIES (Чтение данных)
+# ============================================
+
+type Query {
+  """
+  Получить клиента по ID
+  Возвращает null, если клиент не найден
+  
+  Пример:
+  query {
+    client(id: "client-123") {
+      id
+      name
+      age
+      email
+    }
+  }
+  """
+  client(id: ID!): Client
+  
+  """
+  Получить список клиентов с фильтрацией
+  
+  Пример:
+  query {
+    clients(filter: { name: "Иванов", minAge: 18 }, limit: 10) {
+      id
+      name
+      age
+    }
+  }
+  """
+  clients(
+    filter: ClientFilter
+    limit: Int = 50
+    offset: Int = 0
+  ): [Client!]!
+  
+  """
+  Получить документ по ID
+  
+  Пример:
+  query {
+    document(id: "doc-456") {
+      type
+      number
+      issueDate
+    }
+  }
+  """
+  document(id: ID!): Document
+  
+  """
+  Получить все документы клиента по ID клиента
+  
+  Пример:
+  query {
+    documentsByClient(clientId: "client-123") {
+      type
+      number
+      verificationStatus
+    }
+  }
+  """
+  documentsByClient(clientId: ID!): [Document!]!
+  
+  """
+  Получить документы клиента по типу
+  
+  Пример:
+  query {
+    documentsByType(clientId: "client-123", type: PASSPORT) {
+      number
+      issueDate
+      expiryDate
+    }
+  }
+  """
+  documentsByType(clientId: ID!, type: DocumentType!): [Document!]!
+  
+  """
+  Получить родственника по ID
+  """
+  relative(id: ID!): Relative
+  
+  """
+  Получить всех родственников клиента
+  
+  Пример:
+  query {
+    relativesByClient(clientId: "client-123") {
+      relationType
+      name
+      age
+      isBeneficiary
+    }
+  }
+  """
+  relativesByClient(clientId: ID!): [Relative!]!
+  
+  """
+  Получить контактное лицо по ID
+  """
+  contact(id: ID!): Contact
+  
+  """
+  Получить все контактные лица клиента
+  """
+  contactsByClient(clientId: ID!): [Contact!]!
+}
+
+# ============================================
+# MUTATIONS (Изменение данных)
+# ============================================
+
+type Mutation {
+  """
+  Создать нового клиента
+  
+  Пример:
+  mutation {
+    createClient(input: {
+      name: "Иван Иванов"
+      age: 30
+      email: "ivan@example.com"
+      phone: "+79001234567"
+    }) {
+      id
+      name
+      email
+    }
+  }
+  """
+  createClient(input: CreateClientInput!): Client!
+  
+  """
+  Обновить информацию о клиенте
+  
+  Пример:
+  mutation {
+    updateClient(id: "client-123", input: {
+      phone: "+79009999999"
+      address: "Москва, ул. Ленина, д. 1"
+    }) {
+      id
+      phone
+      address
+    }
+  }
+  """
+  updateClient(id: ID!, input: UpdateClientInput!): Client!
+  
+  """
+  Удалить клиента
+  Возвращает true при успешном удалении
+  """
+  deleteClient(id: ID!): Boolean!
+  
+  """
+  Добавить документ клиенту
+  
+  Пример:
+  mutation {
+    addDocument(input: {
+      clientId: "client-123"
+      type: PASSPORT
+      number: "1234 567890"
+      issueDate: "2010-05-15"
+      issuedBy: "УФМС России"
+    }) {
+      id
+      type
+      number
+    }
+  }
+  """
+  addDocument(input: AddDocumentInput!): Document!
+  
+  """
+  Обновить статус верификации документа
+  """
+  updateDocumentVerificationStatus(
+    id: ID!
+    status: VerificationStatus!
+  ): Document!
+  
+  """
+  Удалить документ
+  """
+  deleteDocument(id: ID!): Boolean!
+  
+  """
+  Добавить родственника клиенту
+  
+  Пример:
+  mutation {
+    addRelative(input: {
+      clientId: "client-123"
+      relationType: SPOUSE
+      name: "Мария Иванова"
+      age: 28
+      isBeneficiary: true
+      beneficiaryShare: 50
+    }) {
+      id
+      name
+      relationType
+    }
+  }
+  """
+  addRelative(input: AddRelativeInput!): Relative!
+  
+  """
+  Удалить родственника
+  """
+  deleteRelative(id: ID!): Boolean!
+}
+
