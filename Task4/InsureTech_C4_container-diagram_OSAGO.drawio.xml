@@ -1,0 +1,258 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.2.5">
+  <diagram id="osago-architecture" name="InsureTech Event-Driven + ОСАГО">
+    <mxGraphModel dx="2593" dy="1438" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object placeholders="1" c4Name="InsureTech Event-Driven + ОСАГО" c4Type="SystemScopeBoundary" c4Application="Event-Driven Architecture + Real-time OSAGO Streaming" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="system-boundary">
+          <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;" parent="1" vertex="1">
+            <mxGeometry x="70" y="110" width="2060" height="1560" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Event Streaming Platform" c4Type="Container" c4Technology="Apache Kafka / Yandex Data Streams" c4Description="Распределенная платформа для обработки потоков событий в реальном времени. Обеспечивает надежную доставку и хранение событий" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="event-platform">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#FFB570;fontColor=#000000;align=center;arcSize=10;strokeColor=#FF6D00;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="630" y="800" width="400" height="150" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="topics-note" value="&lt;b&gt;Topics / Streams:&lt;/b&gt;&#xa;• product.updates&#xa;• tariff.changes&#xa;• insurance.policy.created&#xa;• insurance.policy.updated&#xa;&#xa;&lt;b&gt;ОСАГО (NEW):&lt;/b&gt;&#xa;• osago.applications.created&#xa;• osago.offers.received&#xa;• osago.applications.completed" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;" parent="1" vertex="1">
+          <mxGeometry x="850" y="1010" width="180" height="170" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="core-app" c4Type="Container" c4Technology="Kotlin, SpringBoot" c4Description="Монолитное приложение:&#xa;• отображает страховые продукты&#xa;• оформляет новые страховки&#xa;• ОСАГО: создает заявки, streaming через SSE&#xa;• публикует события InsurancePolicyCreated, OsagoApplicationCreated" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="core-app">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#23A2D9;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="150" y="450" width="260" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="osago-aggregator" c4Type="Container" c4Technology="Kotlin, SpringBoot" c4Description="Сервис агрегации предложений ОСАГО:&#xa;• Получает заявки через Kafka&#xa;• Отправляет запросы в 10 страховых компаний&#xa;• Polling предложений каждые 5 секунд&#xa;• Публикует предложения в Kafka сразу" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="osago-aggregator">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#23A2D9;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="1230" y="580" width="260" height="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="ins-product-aggregator" c4Type="Container" c4Technology="Kotlin, SpringBoot" c4Description="Сервис интеграции со страховыми компаниями:&#xa;• Получает данные о продуктах асинхронно&#xa;• Публикует события ProductUpdated, TariffChanged" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="aggregator">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#23A2D9;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="1160" y="210" width="260" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="ins-comp-settlement" c4Type="Container" c4Technology="Kotlin, SpringBoot" c4Description="Сервис взаиморасчётов:&#xa;• Подписывается на события InsurancePolicyCreated&#xa;• Получает обновления продуктов в реальном времени" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="settlement">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#23A2D9;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="150" y="1080" width="260" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="client-info" c4Type="Container" c4Technology="Kotlin, SpringBoot" c4Description="Сервис для учёта клиентских данных" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="client-info">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#23A2D9;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="520" y="210" width="220" height="100" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="InsureTech Web" c4Container="Container" c4Technology="JavaScript, React" c4Description="Веб-приложение InsureTech:&#xa;• REST для создания заявок ОСАГО&#xa;• SSE для real-time streaming предложений" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="web-app">
+          <mxCell style="shape=mxgraph.c4.webBrowserContainer2;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;strokeColor=#118ACD;fillColor=#23A2D9;fontSize=12;fontColor=#ffffff;align=center;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="160" y="110" width="240" height="160" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="core-db" c4Container="Container" c4Technology="PostgreSQL + Outbox Table" c4Description="БД для хранения тарифов, заявок + таблица outbox для событий" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="core-db">
+          <mxCell style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#23A2D9;fontSize=12;fontColor=#ffffff;align=center;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="450" y="650" width="200" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="osago-redis" c4Container="Container" c4Technology="Redis" c4Description="Хранит:&#xa;• Активные заявки ОСАГО (TTL 1 час)&#xa;• Статус запросов к страховым компаниям&#xa;• Distributed locks для coordination&#xa;• Pub/Sub для broadcast между replicas" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="osago-redis">
+          <mxCell style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#23A2D9;fontSize=12;fontColor=#ffffff;align=center;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="1360" y="950" width="200" height="140" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="settlement-db" c4Container="Container" c4Technology="PostgreSQL" c4Description="БД для хранения данных о взаиморасчётах" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="settlement-db">
+          <mxCell style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#23A2D9;fontSize=12;fontColor=#ffffff;align=center;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="570" y="1090" width="200" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="client-info-db" c4Container="Container" c4Technology="PostgreSQL" c4Description="БД клиентских данных" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Type%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Container%:&amp;nbsp;%c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#E6E6E6&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="client-db">
+          <mxCell style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#23A2D9;fontSize=12;fontColor=#ffffff;align=center;strokeColor=#0E7DAD;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="840" y="200" width="180" height="100" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Страховые компании (10)" c4Type="Software System" c4Description="10 страховых компаний с REST API:&#xa;• POST /osago/applications (создать заявку)&#xa;• GET /osago/applications/{id}/offers (получить предложение)" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#cccccc&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="insurance-companies">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=#ffffff;align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;" parent="1" vertex="1">
+            <mxGeometry x="1770" y="640" width="220" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="Async Event" c4Description="Публикует события:&#xa;InsurancePolicyCreated&#xa;OsagoApplicationCreated" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-core-kafka">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#FF6D00;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;dashed=1;" parent="1" source="core-app" target="event-platform" edge="1">
+            <mxGeometry x="-0.6765" y="40" width="240" relative="1" as="geometry">
+              <mxPoint x="410" y="540" as="sourcePoint" />
+              <mxPoint x="630" y="850" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="180" y="900" />
+              </Array>
+              <mxPoint y="1" as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="Async Event" c4Description="Подписка на:&#xa;OsagoApplicationCreated" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-kafka-osago">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#4CAF50;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;dashed=1;" parent="1" source="event-platform" target="osago-aggregator" edge="1">
+            <mxGeometry x="0.15" y="-50" width="240" relative="1" as="geometry">
+              <mxPoint x="1030" y="875" as="sourcePoint" />
+              <mxPoint x="1180" y="710" as="targetPoint" />
+              <mxPoint as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="Async Event" c4Description="Публикует события:&#xa;OsagoOfferReceived&#xa;(сразу при получении)" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-osago-kafka">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#FF6D00;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;dashed=1;" parent="1" source="osago-aggregator" target="event-platform" edge="1">
+            <mxGeometry x="-0.15" y="50" width="240" relative="1" as="geometry">
+              <mxPoint x="1180" y="720" as="sourcePoint" />
+              <mxPoint x="1030" y="875" as="targetPoint" />
+              <mxPoint as="offset" />
+              <Array as="points">
+                <mxPoint x="920" y="670" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="Async Event" c4Description="Подписка на:&#xa;ProductUpdated, TariffChanged&#xa;OsagoOfferReceived" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-kafka-core">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#4CAF50;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;dashed=1;" parent="1" source="event-platform" target="core-app" edge="1">
+            <mxGeometry x="0.208" y="60" width="240" relative="1" as="geometry">
+              <mxPoint x="630" y="875" as="sourcePoint" />
+              <mxPoint x="410" y="560" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="370" y="875" />
+              </Array>
+              <mxPoint as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="Server-Sent Events" c4Description="SSE Stream:&#xa;/api/v1/osago/applications/{id}/stream&#xa;Real-time offers streaming" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-sse">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=3;endFill=1;strokeColor=#0D47A1;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;dashed=1;dashPattern=12 4;" parent="1" source="core-app" target="web-app" edge="1">
+            <mxGeometry x="-0.1111" y="40" width="240" relative="1" as="geometry">
+              <mxPoint x="280" y="450" as="sourcePoint" />
+              <mxPoint x="280" y="340" as="targetPoint" />
+              <mxPoint as="offset" />
+              <Array as="points">
+                <mxPoint x="230" y="360" />
+                <mxPoint x="230" y="360" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="REST" c4Description="REST API:&#xa;POST /api/osago/applications&#xa;GET/POST endpoints" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-rest">
+          <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="web-app" target="core-app" edge="1">
+            <mxGeometry y="90" width="240" relative="1" as="geometry">
+              <mxPoint x="280" y="340" as="sourcePoint" />
+              <mxPoint x="280" y="450" as="targetPoint" />
+              <mxPoint as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="REST" c4Description="POST /osago/applications&#xa;GET /osago/applications/{id}/offers&#xa;(polling each 5 sec)&#xa;&#xa;Rate Limiter: 100 RPS&#xa;Circuit Breaker&#xa;Retry: 3x&#xa;Timeout: 60s" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-osago-insurance">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="osago-aggregator" target="insurance-companies" edge="1">
+            <mxGeometry width="240" relative="1" as="geometry">
+              <mxPoint x="1440" y="710" as="sourcePoint" />
+              <mxPoint x="1550" y="680" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="TCP" c4Description="Работа с данными:&#xa;• Store applications&#xa;• Distributed locks&#xa;• Pub/Sub broadcast" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-osago-redis">
+          <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="osago-aggregator" target="osago-redis" edge="1">
+            <mxGeometry width="240" relative="1" as="geometry">
+              <mxPoint x="1310" y="800" as="sourcePoint" />
+              <mxPoint x="1310" y="870" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="1430" y="900" />
+                <mxPoint x="1430" y="900" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="Async Event" c4Description="Публикует события:&#xa;ProductUpdated,&#xa;TariffChanged" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-agg-kafka">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#FF6D00;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;dashed=1;" parent="1" source="aggregator" target="event-platform" edge="1">
+            <mxGeometry x="-0.18" y="-40" width="240" relative="1" as="geometry">
+              <mxPoint x="1180" y="450" as="sourcePoint" />
+              <mxPoint x="1030" y="800" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="1110" y="280" />
+                <mxPoint x="1110" y="450" />
+                <mxPoint x="890" y="450" />
+              </Array>
+              <mxPoint as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="REST/SOAP" c4Description="Асинхронные запросы&#xa;к страховым компаниям" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-agg-insurance">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="aggregator" target="insurance-companies" edge="1">
+            <mxGeometry width="240" relative="1" as="geometry">
+              <mxPoint x="1440" y="450" as="sourcePoint" />
+              <mxPoint x="1550" y="680" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="Async Event" c4Description="Подписка на:&#xa;InsurancePolicyCreated,&#xa;ProductUpdated" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-kafka-settlement">
+          <mxCell style="endArrow=classic;html=1;fontSize=10;fontColor=#404040;strokeWidth=2;endFill=1;strokeColor=#4CAF50;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;dashed=1;" parent="1" source="event-platform" target="settlement" edge="1">
+            <mxGeometry x="-0.08" y="40" width="240" relative="1" as="geometry">
+              <mxPoint x="630" y="950" as="sourcePoint" />
+              <mxPoint x="280" y="1080" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="280" y="930" />
+              </Array>
+              <mxPoint x="-1" as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="TCP" c4Description="Работа с данными" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-core-db">
+          <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="core-app" target="core-db" edge="1">
+            <mxGeometry width="240" relative="1" as="geometry">
+              <mxPoint x="410" y="540" as="sourcePoint" />
+              <mxPoint x="450" y="650" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="510" y="500" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="TCP" c4Description="Работа с данными" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-settlement-db">
+          <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="settlement" target="settlement-db" edge="1">
+            <mxGeometry width="240" relative="1" as="geometry">
+              <mxPoint x="410" y="1150" as="sourcePoint" />
+              <mxPoint x="480" y="1150" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="REST" c4Description="Работа с клиентами" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-core-client">
+          <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="core-app" target="client-info" edge="1">
+            <mxGeometry width="240" relative="1" as="geometry">
+              <mxPoint x="410" y="450" as="sourcePoint" />
+              <mxPoint x="520" y="260" as="targetPoint" />
+              <Array as="points">
+                <mxPoint x="630" y="480" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Type="Relationship" c4Technology="TCP" c4Description="Работа с данными" label="&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center&quot;&gt;[%c4Technology%]&lt;/div&gt;" id="rel-client-db">
+          <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="client-info" target="client-db" edge="1">
+            <mxGeometry width="240" relative="1" as="geometry">
+              <mxPoint x="740" y="260" as="sourcePoint" />
+              <mxPoint x="840" y="250" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="resilience-note" value="&lt;b&gt;Паттерны отказоустойчивости&lt;/b&gt;&lt;br&gt;(osago-aggregator → Insurance Companies)&lt;br&gt;&lt;br&gt;&lt;b&gt;Rate Limiter:&lt;/b&gt; 100 RPS per company&lt;br&gt;   • Distributed через Redis&lt;br&gt;   • Учет всех реплик (2-5)&lt;br&gt;&lt;br&gt;&lt;b&gt;Circuit Breaker:&lt;/b&gt;&lt;br&gt;   • Open at 50% failure rate&lt;br&gt;   • Wait 30s before retry&lt;br&gt;   • States: CLOSED/OPEN/HALF_OPEN&lt;br&gt;&lt;br&gt;&lt;b&gt;Retry:&lt;/b&gt; max 3 attempts&lt;br&gt;   • Exponential backoff: 2s, 4s&lt;br&gt;   • Only for GET (idempotent)&lt;br&gt;&lt;br&gt;&lt;b&gt;Timeout:&lt;/b&gt;&lt;br&gt;   • Per-request: 10 seconds&lt;br&gt;   • Global: 60 seconds" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="1770" y="820" width="280" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="osago-flow-note" value="&lt;b&gt;ОСАГО User Flow (real-time)&lt;/b&gt;&lt;br&gt;&lt;br&gt;1. User заполняет форму&lt;br&gt;   → POST /api/osago/applications&lt;br&gt;&lt;br&gt;2. Browser opens SSE connection&lt;br&gt;   → GET /api/v1/osago/.../stream&lt;br&gt;&lt;br&gt;3. core-app → Kafka:&lt;br&gt;   OsagoApplicationCreated&lt;br&gt;&lt;br&gt;4. osago-aggregator:&lt;br&gt;   → отправляет в 10 компаний&lt;br&gt;   → polling каждые 5 сек&lt;br&gt;&lt;br&gt;5. osago-aggregator → Kafka:&lt;br&gt;   OsagoOfferReceived (сразу!)&lt;br&gt;&lt;br&gt;6. core-app ← Kafka&lt;br&gt;   → Redis Pub/Sub&lt;br&gt;   → SSE stream → Browser&lt;br&gt;&lt;br&gt;7. User видит первое предложение&lt;br&gt;   (2-5 секунд)&amp;nbsp;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="1775" y="1110" width="270" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="redis-coord-note" value="&lt;b&gt;Redis для координации реплик&lt;/b&gt;&#xa;&#xa;core-app: 3-10 replicas (HPA)&#xa;osago-aggregator: 2-5 replicas (HPA)&#xa;&#xa;&lt;b&gt;Проблемы:&lt;/b&gt;&#xa;• SSE connection на replica 1&#xa;• Kafka event приходит в replica 2&#xa;&#xa;&lt;b&gt;Решение: Redis Pub/Sub&lt;/b&gt;&#xa;1. Kafka event → any replica&#xa;2. Publish to Redis channel&#xa;3. All replicas receive&#xa;4. Broadcast to SSE clients&#xa;&#xa;&lt;b&gt;Distributed State:&lt;/b&gt;&#xa;• Locks для polling coordination&#xa;• Rate limiter counters" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="1350" y="1120" width="270" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox-note" value="&lt;b&gt;Transactional Outbox Pattern&lt;/b&gt;&#xa;&#xa;core-app использует паттерн Outbox:&#xa;1. Транзакция записывает данные в БД&#xa;    и событие в outbox_events&#xa;2. CDC (Debezium) читает outbox_events&#xa;3. Публикует события в Kafka&#xa;4. Гарантия: exactly-once semantics" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="110" y="1310" width="270" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="&lt;b&gt;Легенда:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color:#828282&quot;&gt;——›&lt;/span&gt; Синхронные вызовы (REST, серый)&lt;br&gt;&lt;span style=&quot;color:#FF6D00&quot;&gt;- - -›&lt;/span&gt; Публикация событий (Kafka, оранжевый)&lt;br&gt;&lt;span style=&quot;color:#4CAF50&quot;&gt;- - -›&lt;/span&gt; Подписка на события (Kafka, зеленый)&lt;br&gt;&lt;span style=&quot;color:#0D47A1&quot;&gt;&lt;b&gt;━ ━ ━›&lt;/b&gt;&lt;/span&gt; &lt;b&gt;SSE stream (темно-синий)&lt;/b&gt;&lt;br&gt;&lt;br&gt;SSE: более толстая линия (3px)&lt;br&gt;SSE: длинные черточки (12-4)&lt;br&gt;Kafka: тонкая линия (2px)&lt;br&gt;Kafka: короткие черточки (8-8)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="440" y="1310" width="330" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="benefits-note" value="&lt;b&gt;Преимущества решения:&lt;/b&gt;&#xa;&#xa;✓ Real-time streaming предложений&#xa;✓ Первое предложение через 2-5 сек&#xa;✓ Отказоустойчивость: 4 паттерна&#xa;✓ Масштабируемость: 2500+ users&#xa;✓ Loose coupling через Kafka&#xa;✓ Distributed coordination через Redis&#xa;✓ SSE: auto-reconnect, HTTP/2&#xa;✓ Готовность к 10+ страховым компаниям" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="1340" y="1410" width="290" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b style=&quot;font-size: 20px;&quot;&gt;InsureTech - Event-Driven Architecture + ОСАГО (TO-BE)&lt;/b&gt;&#xa;Асинхронная обработка событий + real-time streaming предложений ОСАГО с паттернами отказоустойчивости" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" parent="1" vertex="1">
+          <mxGeometry x="50" y="20" width="1400" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

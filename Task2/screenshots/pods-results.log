@@ -1,0 +1,4 @@
+NAME                          READY   STATUS    RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+scaletestapp-df97db49-gdnbm   1/1     Running   0          8m41s   10.244.0.92   minikube   <none>           <none>
+scaletestapp-df97db49-jzv6v   1/1     Running   0          5m26s   10.244.0.93   minikube   <none>           <none>
+scaletestapp-df97db49-mtwqq   1/1     Running   0          22h     10.244.0.90   minikube   <none>           <none>

@@ -1,0 +1,209 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.2.5">
+  <diagram name="to-be" id="to-be-architecture">
+    <mxGraphModel dx="3671" dy="2235" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yandex-cloud" value="&lt;b&gt;Yandex Cloud&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3ebff;strokeColor=#5282ff;verticalAlign=top;fontSize=18;align=left;spacingLeft=10;dashed=1;dashPattern=8 8;" parent="1" vertex="1">
+          <mxGeometry x="-530" y="140" width="3080" height="1800" as="geometry" />
+        </mxCell>
+        <mxCell id="cdn-layer" value="&lt;b&gt;CDN + Object Storage&lt;/b&gt;&lt;br&gt;(Статический контент, быстрая загрузка для всех регионов)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff4e6;strokeColor=#ff9933;verticalAlign=top;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="50" y="200" width="500" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="alb-layer" value="&lt;b&gt;Application Load Balancer&lt;/b&gt;&lt;br&gt;(Распределение трафика + Health Checks)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="400" y="340" width="570" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="healthcheck-note" value="Health Checks:&#xa;- HTTP /health&#xa;- Interval: 10s&#xa;- Timeout: 5s&#xa;- Unhealthy threshold: 3" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffffcc;strokeColor=#cccc00;fontSize=10;align=left;size=34;" parent="1" vertex="1">
+          <mxGeometry x="435" y="350" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="k8s-cluster" value="&lt;b&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Managed Kubernetes Cluster&lt;/b&gt;&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; (Горизонтальное масштабирование)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#5282ff;verticalAlign=top;fontSize=14;align=left;spacingLeft=10;" parent="1" vertex="1">
+          <mxGeometry x="-70" y="485" width="2250" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="zone-a" value="&lt;b&gt;Зона доступности ru-central1-a&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3ebff;strokeColor=#5282ff;verticalAlign=top;fontSize=12;dashed=1;dashPattern=4 4;" parent="1" vertex="1">
+          <mxGeometry x="120" y="530" width="620" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="node-group-a" value="Node Group A" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="150" y="570" width="560" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-a-web" value="Web App Pod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="180" y="610" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-a-core" value="core-app Pod&#xa;(replica 1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="180" y="690" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-a-client" value="client-info Pod&#xa;(replica 1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="180" y="770" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-a-aggregator" value="ins-product-&#xa;aggregator Pod&#xa;(replica 1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="180" y="850" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-a-settlement" value="ins-comp-&#xa;settlement Pod&#xa;(replica 1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="180" y="940" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hpa-a" value="HPA&#xa;(Horizontal Pod&#xa;Autoscaler)" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="530" y="610" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zone-b" value="&lt;b&gt;Зона доступности ru-central1-b&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3ebff;strokeColor=#5282ff;verticalAlign=top;fontSize=12;dashed=1;dashPattern=4 4;" parent="1" vertex="1">
+          <mxGeometry x="800" y="530" width="620" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="node-group-b" value="Node Group B" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="830" y="570" width="560" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-b-web" value="Web App Pod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="860" y="610" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-b-core" value="core-app Pod&#xa;(replica 2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="860" y="690" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-b-client" value="client-info Pod&#xa;(replica 2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="860" y="770" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-b-aggregator" value="ins-product-&#xa;aggregator Pod&#xa;(replica 2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="860" y="850" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-b-settlement" value="ins-comp-&#xa;settlement Pod&#xa;(replica 2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="860" y="940" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hpa-b" value="HPA&#xa;(Horizontal Pod&#xa;Autoscaler)" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="1210" y="610" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zone-d" value="&lt;b&gt;Зона доступности ru-central1-d&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3ebff;strokeColor=#5282ff;verticalAlign=top;fontSize=12;dashed=1;dashPattern=4 4;" parent="1" vertex="1">
+          <mxGeometry x="1480" y="530" width="620" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="node-group-d" value="Node Group D" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="1510" y="570" width="560" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-d-web" value="Web App Pod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="610" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-d-core" value="core-app Pod&#xa;(replica 3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="690" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-d-client" value="client-info Pod&#xa;(replica 3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="770" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-d-aggregator" value="ins-product-&#xa;aggregator Pod&#xa;(replica 3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="850" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pod-d-settlement" value="ins-comp-&#xa;settlement Pod&#xa;(replica 3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="940" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hpa-d" value="HPA&#xa;(Horizontal Pod&#xa;Autoscaler)" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="1890" y="610" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="db-cluster" value="&lt;b&gt;Managed PostgreSQL Cluster&lt;/b&gt;&lt;br&gt;(Синхронная репликация для RPO=15 мин)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="80" y="1220" width="2100" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="db-master" value="PostgreSQL Master&#xa;(ru-central1-a)&#xa;&#xa;• core-app DB&#xa;• client-info DB&#xa;• ins-comp-settlement DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#23A2D9;fontColor=#ffffff;strokeColor=#0E7DAD;" parent="1" vertex="1">
+          <mxGeometry x="300" y="1280" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="db-icon-master" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed;image=data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIj4mI3hhOzxwYXRoIGQ9Ik0wIDE2QzAgNy4xNjM0NCA3LjE2MzQ0IDAgMTYgMFYwQzI0LjgzNjYgMCAzMiA3LjE2MzQ0IDMyIDE2VjE2QzMyIDI0LjgzNjYgMjQuODM2NiAzMiAxNiAzMlYzMkM3LjE2MzQ0IDMyIDAgMjQuODM2NiAwIDE2VjE2WiIgZmlsbD0iIzUyODJGRiIvPiYjeGE7PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMyA4SDE4QzIxLjMgOCAyNCAxMC43IDI0IDE0VjI0SDIwVjIwSDIyVjE5SDE4LjZDMTUuNSAxOSAxMyAxNi41IDEzIDEzLjRWOFpNMTkgMTdIMjFWMTVIMTlWMTdaTTEyIDkuMDk5OThWMTMuNEMxMiAxNi44IDE0LjYgMTkuNyAxOCAyMC4xVjIwLjZDMTggMjIgMTUuOCAyMy4xIDEzIDIzLjFDMTAuMiAyMy4xIDggMjIgOCAyMC42VjExLjZDOCAxMC4zIDkuNyA5LjI5OTk4IDEyIDkuMDk5OThaIiBmaWxsPSJ3aGl0ZSIvPiYjeGE7PC9zdmc+;" parent="1" vertex="1">
+          <mxGeometry x="380" y="1290" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="db-replica-1" value="PostgreSQL Replica 1&#xa;(ru-central1-b)&#xa;&#xa;Синхронная&#xa;репликация" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#60a5fa;fontColor=#ffffff;strokeColor=#0E7DAD;" parent="1" vertex="1">
+          <mxGeometry x="700" y="1280" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="db-icon-replica1" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed;image=data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIj4mI3hhOzxwYXRoIGQ9Ik0wIDE2QzAgNy4xNjM0NCA3LjE2MzQ0IDAgMTYgMFYwQzI0LjgzNjYgMCAzMiA3LjE2MzQ0IDMyIDE2VjE2QzMyIDI0LjgzNjYgMjQuODM2NiAzMiAxNiAzMlYzMkM3LjE2MzQ0IDMyIDAgMjQuODM2NiAwIDE2VjE2WiIgZmlsbD0iIzUyODJGRiIvPiYjeGE7PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMyA4SDE4QzIxLjMgOCAyNCAxMC43IDI0IDE0VjI0SDIwVjIwSDIyVjE5SDE4LjZDMTUuNSAxOSAxMyAxNi41IDEzIDEzLjRWOFpNMTkgMTdIMjFWMTVIMTlWMTdaTTEyIDkuMDk5OThWMTMuNEMxMiAxNi44IDE0LjYgMTkuNyAxOCAyMC4xVjIwLjZDMTggMjIgMTUuOCAyMy4xIDEzIDIzLjFDMTAuMiAyMy4xIDggMjIgOCAyMC42VjExLjZDOCAxMC4zIDkuNyA5LjI5OTk4IDEyIDkuMDk5OThaIiBmaWxsPSJ3aGl0ZSIvPiYjeGE7PC9zdmc+;" parent="1" vertex="1">
+          <mxGeometry x="780" y="1290" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="db-replica-2" value="PostgreSQL Replica 2&#xa;(ru-central1-d)&#xa;&#xa;Синхронная&#xa;репликация" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#60a5fa;fontColor=#ffffff;strokeColor=#0E7DAD;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="1280" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="db-icon-replica2" value="" style="shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed;image=data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIj4mI3hhOzxwYXRoIGQ9Ik0wIDE2QzAgNy4xNjM0NCA3LjE2MzQ0IDAgMTYgMFYwQzI0LjgzNjYgMCAzMiA3LjE2MzQ0IDMyIDE2VjE2QzMyIDI0LjgzNjYgMjQuODM2NiAzMiAxNiAzMlYzMkM3LjE2MzQ0IDMyIDAgMjQuODM2NiAwIDE2VjE2WiIgZmlsbD0iIzUyODJGRiIvPiYjeGE7PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMyA4SDE4QzIxLjMgOCAyNCAxMC43IDI0IDE0VjI0SDIwVjIwSDIyVjE5SDE4LjZDMTUuNSAxOSAxMyAxNi41IDEzIDEzLjRWOFpNMTkgMTdIMjFWMTVIMTlWMTdaTTEyIDkuMDk5OThWMTMuNEMxMiAxNi44IDE0LjYgMTkuNyAxOCAyMC4xVjIwLjZDMTggMjIgMTUuOCAyMy4xIDEzIDIzLjFDMTAuMiAyMy4xIDggMjIgOCAyMC42VjExLjZDOCAxMC4zIDkuNyA5LjI5OTk4IDEyIDkuMDk5OThaIiBmaWxsPSJ3aGl0ZSIvPiYjeGE7PC9zdmc+;" parent="1" vertex="1">
+          <mxGeometry x="1180" y="1290" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="backup-storage" value="Object Storage&#xa;(Бэкапы БД)&#xa;&#xa;Автоматические&#xa;бэкапы каждые&#xa;15 минут&#xa;(RPO = 15 мин)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="1520" y="1280" width="180" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-alb-a" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#82b366;" parent="1" source="alb-layer" target="zone-a" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="450" as="sourcePoint" />
+            <mxPoint x="380" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-alb-b" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#82b366;" parent="1" source="alb-layer" target="zone-b" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="450" as="sourcePoint" />
+            <mxPoint x="380" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-alb-d" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#82b366;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="alb-layer" target="zone-d" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="450" as="sourcePoint" />
+            <mxPoint x="380" y="400" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="repl-1" value="Репликация" style="endArrow=classic;startArrow=classic;html=1;strokeWidth=2;strokeColor=#b85450;dashed=1;" parent="1" source="db-master" target="db-replica-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="1370" as="sourcePoint" />
+            <mxPoint x="550" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="repl-2" value="Репликация" style="endArrow=classic;startArrow=classic;html=1;strokeWidth=2;strokeColor=#b85450;dashed=1;" parent="1" source="db-master" target="db-replica-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="1370" as="sourcePoint" />
+            <mxPoint x="550" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="backup-conn" value="Бэкапы" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#d6b656;dashed=1;" parent="1" source="db-replica-2" target="backup-storage" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1300" y="1370" as="sourcePoint" />
+            <mxPoint x="1350" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="users" value="&lt;b&gt;Пользователи&#xa;из разных регионов&lt;/b&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#083F75;fontColor=#ffffff;strokeColor=#06315C;" parent="1" vertex="1">
+          <mxGeometry x="545" y="40" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="partners" value="&lt;b&gt;Партнёры (API)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8C8496;fontColor=#ffffff;strokeColor=#736782;" parent="1" vertex="1">
+          <mxGeometry x="650" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ins-companies" value="&lt;b&gt;Страховые&#xa;компании&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8C8496;fontColor=#ffffff;strokeColor=#736782;" parent="1" vertex="1">
+          <mxGeometry x="840" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="user-cdn" value="HTTPS" style="endArrow=classic;html=1;strokeWidth=2;" parent="1" source="users" target="cdn-layer" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="100" as="sourcePoint" />
+            <mxPoint x="370" y="50" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="user-alb" value="HTTPS" style="endArrow=classic;html=1;strokeWidth=2;" parent="1" source="users" target="alb-layer" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="200" as="sourcePoint" />
+            <mxPoint x="370" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="partner-alb" value="REST/API" style="endArrow=classic;html=1;strokeWidth=2;entryX=0.585;entryY=0.06;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="partners" target="alb-layer" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="710" y="200" as="sourcePoint" />
+            <mxPoint x="760" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k8s-decision" value="&lt;b&gt;Решение: Единый Managed Kubernetes кластер&lt;/b&gt;&#xa;&#xa;Обоснование:&#xa;• Проще управление (единая control plane)&#xa;• Автоматическое распределение нагрузки&#xa;• Node groups в каждой зоне для отказоустойчивости&#xa;• HPA автоматически масштабирует поды&#xa;• Kubernetes scheduler автоматически распределяет&#xa;  поды по зонам для обеспечения доступности&#xa;&#xa;Альтернатива: Независимые кластеры в каждой зоне&#xa;• Плюсы: Лучшая изоляция&#xa;• Минусы: Сложнее управление, нужна синхронизация&#xa;  между кластерами, дороже" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="720" y="1520" width="400" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="failover-strategy" value="&lt;b&gt;Фейловер-стратегия: Active-Active&lt;/b&gt;&#xa;&#xa;Клиент → ALB:&#xa;• ALB проверяет health checks всех зон&#xa;• При отказе одной зоны трафик автоматически&#xa;  перенаправляется в оставшиеся зоны&#xa;• Latency-based routing для минимизации задержек&#xa;&#xa;Приложения:&#xa;• Минимум 3 реплики (по 1 в каждой зоне)&#xa;• При отказе зоны реплики продолжают работать&#xa;&#xa;БД: Active-Passive с автоматическим failover&#xa;• Master в зоне A&#xa;• Синхронные реплики в зонах B и D&#xa;• При отказе master автоматическое повышение replica&#xa;• Failover time: &lt; 1 минута&#xa;• Соответствует RTO = 45 мин" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="1480" width="420" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="scaling-strategy" value="&lt;b&gt;Стратегия масштабирования:&#xa;Горизонтальное&lt;/b&gt;&#xa;&#xa;Обоснование:&#xa;• Микросервисная архитектура&#xa;• Kubernetes HPA автоматически&#xa;  добавляет/удаляет поды&#xa;• Метрики: CPU &gt; 70%, Memory &gt; 80%&#xa;• Min replicas: 3 (по 1 в каждой зоне)&#xa;• Max replicas: 30 (по 10 в каждой зоне)&#xa;&#xa;Вертикальное масштабирование:&#xa;• Используется для БД&#xa;• При необходимости увеличение&#xa;  ресурсов master-ноды" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="130" y="1480" width="280" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="db-config" value="&lt;b&gt;Конфигурация БД:&lt;/b&gt;&#xa;&#xa;• Managed PostgreSQL Cluster&#xa;• Синхронная репликация (sync mode)&#xa;  для критичных данных&#xa;• 1 Master + 2 Sync Replicas&#xa;• Автоматический failover (HA)&#xa;&#xa;&lt;b&gt;Бэкапы:&lt;/b&gt;&#xa;• Автоматические каждые 15 мин&#xa;• Retention: 30 дней&#xa;• Хранение в Object Storage&#xa;• Point-in-time recovery (PITR)&#xa;&#xa;&lt;b&gt;RPO = 15 мин достигается за счёт:&lt;/b&gt;&#xa;• Синхронная репликация (0 потерь)&#xa;• Бэкапы каждые 15 мин&#xa;&#xa;&lt;b&gt;RTO = 45 мин достигается за счёт:&lt;/b&gt;&#xa;• Автоматический failover (&lt;1 мин)&#xa;• Восстановление из бэкапа (до 30 мин)&#xa;• Переключение DNS (до 5 мин)&#xa;&#xa;&lt;b&gt;Шардирование:&lt;/b&gt;&#xa;НЕ используется на данном этапе&#xa;• Объём данных: 50GB (достаточно мало)&#xa;• Одна БД справляется с нагрузкой&#xa;• При росте до 500GB+ рассмотреть шардирование" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="1740" y="1360" width="340" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="availability-note" value="&lt;b&gt;Доступность 99.9%&lt;/b&gt;&#xa;&#xa;Обеспечивается:&#xa;• 3 зоны доступности&#xa;• Автоматический failover&#xa;• Health checks&#xa;• HPA для приложений&#xa;• Managed services (K8s, PostgreSQL)&#xa;  с SLA 99.95%&#xa;&#xa;Простой в месяц: ~43 минуты" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=left;spacing=5;" parent="1" vertex="1">
+          <mxGeometry x="440" y="1560" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b style=&quot;font-size: 24px;&quot;&gt;InsureTech - Технологическая архитектура (TO-BE)&lt;/b&gt;&#xa;Отказоустойчивая архитектура с горизонтальным масштабированием" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="920" y="-130" width="900" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_he9cIy6hEahaX7hHoiC-4" value="REST/API" style="endArrow=classic;html=1;strokeWidth=2;entryX=0.706;entryY=-0.031;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="alb-layer">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="899" y="110" as="sourcePoint" />
+            <mxPoint x="880" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
